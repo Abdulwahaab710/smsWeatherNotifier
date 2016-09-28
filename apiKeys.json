@@ -1,0 +1,6 @@
+{
+    "api":{
+        "twilio": "Your API key here!",
+        "darkSky": "Your API key here!"
+    }
+}
