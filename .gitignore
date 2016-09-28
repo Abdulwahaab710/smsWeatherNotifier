@@ -88,6 +88,6 @@ ENV/
 # Rope project settings
 .ropeproject
 
-#apiKey
-apiKeys.json
-phoneNumbers.json
+# apiKey
+./apiKeys.json
+./phoneNumbers.json
