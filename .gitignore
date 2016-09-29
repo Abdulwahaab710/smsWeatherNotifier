@@ -89,5 +89,5 @@ ENV/
 .ropeproject
 
 # apiKey
-./apiKeys.json
-./phoneNumbers.json
+apiKeys.json
+phoneNumbers.json
