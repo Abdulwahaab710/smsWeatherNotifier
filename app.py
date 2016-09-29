@@ -1,5 +1,5 @@
 # from twilio.rest import TwilioRestClient
-# import os
+import os
 # import logging
 import json
 import requests
@@ -27,10 +27,38 @@ def getWeatherInfo(latitude, longitude):
     return r.json()
 
 
+def temperatureToWords(temp):
+    tempWords = []
+    for t in temp:
+        if (float(t) <= -31):
+            tempWords.append('I would not recommend that you go out.')
+        elif (-10 < float(t) < -30):
+            tempWords.append('freezing cold. You should wear a jacket')
+        elif (0 < float(t) < 15):
+            os.system('say {0}'.format('cold'))
+            tempWords.append('cold')
+        elif (15 < float(t) < 20):
+            tempWords.append('warm, Room indoors')
+        elif (20 < float(t) < 25):
+            tempWords.append('warm, Warm room')
+        elif (25 < float(t) < 30):
+            tempWords.append('Hot day')
+        elif (30 < float(t) < 37):
+            tempWords.append('Very Hot, Body temperature')
+        elif (37 < float(t) < 40):
+            tempWords.append(
+                'Very Hot, Washing machine setting for clothes for normal wash'
+            )
+        elif (40 < float(t) < 50):
+            tempWords.append('Extremely hot')
+    return tempWords
+
+
 def getHourly(Json):
     weatherTemperature = []
     for i in range(len(Json['hourly']['data'])):
         weatherTemperature.append(Json['hourly']['data'][i]['temperature'])
+    return weatherTemperature
 
 
 def getApiKey(key):
@@ -47,8 +75,8 @@ def sendSMS(phoneNumbers):
 def main():
     latitude = '45.4215'
     longitude = '-75.6972'
-    # print getWeatherInfo(latitude, longitude)
-    getHourly(getWeatherInfo(latitude, longitude))
+    hourlyData = getHourly(getWeatherInfo(latitude, longitude))
+    print temperatureToWords(hourlyData)
 
 
 if __name__ == '__main__':
