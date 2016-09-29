@@ -27,6 +27,12 @@ def getWeatherInfo(latitude, longitude):
     return r.json()
 
 
+def getHourly(Json):
+    weatherTemperature = []
+    for i in range(len(Json['hourly']['data'])):
+        weatherTemperature.append(Json['hourly']['data'][i]['temperature'])
+
+
 def getApiKey(key):
     data = ''
     with open('apiKeys.json') as data_file:
@@ -41,7 +47,8 @@ def sendSMS(phoneNumbers):
 def main():
     latitude = '45.4215'
     longitude = '-75.6972'
-    print getWeatherInfo(latitude, longitude)
+    # print getWeatherInfo(latitude, longitude)
+    getHourly(getWeatherInfo(latitude, longitude))
 
 
 if __name__ == '__main__':
