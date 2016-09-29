@@ -18,6 +18,7 @@ import requests
 
 
 def getWeatherInfo(latitude, longitude):
+    '''(str, str) -> (dict)'''
     apiKey = getApiKey('darkSky')
     unit = 'si'
     url = 'https://api.darksky.net/forecast/{0}/{1},{2}?units={3}'.format(
@@ -28,6 +29,9 @@ def getWeatherInfo(latitude, longitude):
 
 
 def temperatureToWords(temp):
+    '''(list) -> (list)
+
+    '''
     tempWords = []
     for t in temp:
         if (float(t) <= -31):
@@ -55,6 +59,8 @@ def temperatureToWords(temp):
 
 
 def getHourly(Json):
+    '''(dict) -> (list)
+    '''
     weatherTemperature = []
     for i in range(len(Json['hourly']['data'])):
         weatherTemperature.append(Json['hourly']['data'][i]['temperature'])
@@ -62,6 +68,7 @@ def getHourly(Json):
 
 
 def getApiKey(key):
+    '''(str) -> (str)'''
     data = ''
     with open('apiKeys.json') as data_file:
         data = json.load(data_file)
