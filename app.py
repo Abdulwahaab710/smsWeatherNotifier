@@ -86,6 +86,10 @@ def sendSMS(phoneNumbers):
     pass
 
 
+def checkIfRainingOrSnowing(Json):
+    pass
+
+
 def main():
     latitude = '45.4215'
     longitude = '-75.6972'
