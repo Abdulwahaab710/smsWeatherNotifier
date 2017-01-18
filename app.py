@@ -41,7 +41,6 @@ def temperatureToWords(temp):
         elif (-10 < float(t) < -30):
             tempWords.append('freezing cold. You should wear a jacket')
         elif (0 < float(t) < 15):
-            # os.system('say {0}'.format('cold'))
             tempWords.append('cold')
         elif (15 < float(t) < 20):
             tempWords.append('warm, Room indoors')
