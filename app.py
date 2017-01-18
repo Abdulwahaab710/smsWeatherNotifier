@@ -1,20 +1,22 @@
-# from twilio.rest import TwilioRestClient
-import os
+from twilio.rest import TwilioRestClient
+# import os
 # import logging
 import json
 import requests
 
 
-# def load_twilio_config():
-#     twilio_account_sid = os.environ.get('TWILIO_ACCOUNT_SID')
-#     twilio_auth_token = os.environ.get('TWILIO_AUTH_TOKEN')
-#     twilio_number = os.environ.get('TWILIO_NUMBER')
-#
-#     if not all([twilio_account_sid, twilio_auth_token, twilio_number]):
-#         logger.error(NOT_CONFIGURED_MESSAGE)
-#         raise MiddlewareNotUsed
-#
-#     return (twilio_number, twilio_account_sid, twilio_auth_token)
+def sendSMS(phoneNumbers, latitude, longitude):
+    '''(list) -> bool
+    '''
+    phoneNumbers = '+16135013175'
+    smsBody = temperatureToWords(
+        getWeatherInfo(latitude, longitude)
+    )
+    token = getToken()
+    client = TwilioRestClient(token[0], token[1])
+    client.messages.create(from_=phoneNumbers,
+                           to=phoneNumbers,
+                           body=smsBody)
 
 
 def getWeatherInfo(latitude, longitude):
@@ -82,8 +84,19 @@ def getApiKey(key):
         exit()
 
 
-def sendSMS(phoneNumbers):
-    pass
+def getToken():
+    try:
+        data = ''
+        with open('apiKeys.json') as data_file:
+            data = json.load(data_file)
+        return [data['token']['TWILIO_ACCOUNT_SID'],
+                data['token']['TWILIO_AUTH_TOKEN']]
+    except KeyError:
+        print 'invalid key, or the key doesn\'t exists'
+        exit()
+    except IOError:
+        print 'invalid file name, or the file doesn\'t exists'
+        exit()
 
 
 def checkIfRainingOrSnowing(Json):
@@ -91,10 +104,11 @@ def checkIfRainingOrSnowing(Json):
 
 
 def main():
-    latitude = '45.4215'
-    longitude = '-75.6972'
-    hourlyData = getHourly(getWeatherInfo(latitude, longitude))
-    print temperatureToWords(hourlyData)
+    # latitude = '45.4215'
+    # longitude = '-75.6972'
+    # hourlyData = getHourly(getWeatherInfo(latitude, longitude))
+    # print temperatureToWords(hourlyData)
+    pass
 
 
 if __name__ == '__main__':
